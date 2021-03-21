@@ -4,6 +4,8 @@ from os import system
 
 from httprunner import HttpRunner, Config, Step, RunRequest
 
+from debugtalk import sum_two
+
 
 class TestCaseMubuCreateDocFial(HttpRunner):
 
@@ -280,7 +282,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
             .assert_equal("body.data.documents[0].folderId","0")
-            .assert_length_greater_or_equals("body.data.documents",6)
+            .assert_length_greater_or_equals("body.data.documents", sum_two(5,2))
             .assert_contains("body.data.documents[0].name", "kaikai")
         ),
         Step(
