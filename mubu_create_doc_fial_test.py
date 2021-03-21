@@ -8,12 +8,14 @@ from httprunner import HttpRunner, Config, Step, RunRequest
 class TestCaseMubuCreateDocFial(HttpRunner):
 
     config = Config("testcase description")\
-        .verify(False)
+        .verify(False).base_url("https://mubu.com")
+
+
 
     teststeps = [
         Step(
             RunRequest("/")
-            .get("https://mubu.com/")
+            .get("/")
             .with_headers(
                 **{
                     "cache-control": "max-age=0",
@@ -52,7 +54,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
         ),
         Step(
             RunRequest("/login")
-            .get("https://mubu.com/login")
+            .get("/login")
             .with_headers(
                 **{
                     "sec-ch-ua": '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
@@ -89,7 +91,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
         ),
         Step(
             RunRequest("/login/password")
-            .get("https://mubu.com/login/password")
+            .get("/login/password")
             .with_headers(
                 **{
                     "sec-ch-ua": '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
@@ -129,7 +131,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
         ),
         Step(
             RunRequest("/api/login/submit")
-            .post("https://mubu.com/api/login/submit")
+            .post("/api/login/submit")
             .with_headers(
                 **{
                     "content-length": "51",
@@ -176,7 +178,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
         ),
         Step(
             RunRequest("/app")
-            .get("https://mubu.com/app")
+            .get("/app")
             .with_headers(
                 **{
                     "sec-ch-ua": '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
