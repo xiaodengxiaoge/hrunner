@@ -8,7 +8,7 @@ from httprunner import HttpRunner, Config, Step, RunRequest
 class TestCaseMubuCreateDocFial(HttpRunner):
 
     config = Config("testcase description")\
-        .variables(**{"host": "mubu.com"})\
+        .variables(**{"host": "mubu.com", "Phone": "18600393078", "Password": "20160215ze"})\
         .verify(False)\
         .base_url("https://${host}")
 
@@ -171,11 +171,10 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                 }
             )
             .with_data(
-                {"phone": "18600393078", "password": "20160215ze", "remember": "true"}
+                {"phone": "$Phone", "password": "$Password", "remember": "true"}
             )
             .validate()
-            .assert_equal
-                ("status_code", 200)
+            .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
             .assert_equal("body.msg", None)
         ),
@@ -337,8 +336,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .with_data("")
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-            ("body.code", 0)
+            .assert_equal("body.code", 0)
         ),
         Step(
             RunRequest("/v3/api/advertisement/get")
@@ -455,13 +453,11 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                     "accept-language": "zh-CN,zh;q=0.9",
                 }
             )
-            .with_json
-                ({"folderId": "0", "type": 0})
+            .with_json({"folderId": "0", "type": 0})
             .extract()
             .with_jmespath("body.data.id", "docID")
             .validate()
-            .assert_equal
-                ("status_code", 200)
+            .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
         ),
         Step(
@@ -521,8 +517,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             )
             .with_json({"document_id": "$docID"})
             .validate()
-            .assert_equal
-                ("status_code", 200)
+            .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
         ),
         Step(
@@ -579,8 +574,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                     "accept-language": "zh-CN,zh;q=0.9",
                 }
             )
-            .with_json
-                ({"targetDocId": "$docID"})
+            .with_json({"targetDocId": "$docID"})
             .validate()
             .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
@@ -635,8 +629,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                     "accept-language": "zh-CN,zh;q=0.9",
                 }
             )
-            .with_json
-                ({"targetDocId": "$docID"})
+            .with_json({"targetDocId": "$docID"})
             .validate()
             .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
@@ -828,8 +821,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                 ({"docId": "$docID", "keywords": "kaikai", "option": 1})
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-                ("body.code", 0)
+            .assert_equal("body.code", 0)
         ),
         Step(
             RunRequest("/v3/api/colla/message")
@@ -918,8 +910,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                 ({"docId": "$docID", "keywords": "kaikai2", "option": 1})
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-                ("body.code", 0)
+            .assert_equal("body.code", 0)
         ),
         Step(
             RunRequest("/v3/api/colla/message")
