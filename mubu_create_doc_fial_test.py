@@ -177,6 +177,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .assert_equal("status_code", 200)
             .assert_equal("body.code", 0)
             .assert_equal("body.msg", None)
+            .assert_equal("body.data.next", "/app")
         ),
         Step(
             RunRequest("/app")
@@ -218,8 +219,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
                 }
             )
             .validate()
-            .assert_equal
-                ("status_code", 200)
+            .assert_equal("status_code", 200)
         ),
         Step(
             RunRequest("/v3/api/user/profile")
@@ -247,8 +247,8 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .with_data("")
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-                ("body.code", 0)
+            .assert_equal("body.code", 0)
+            .assert_equal("body.data.phone", "$Phone")
         ),
         Step(
             RunRequest("/v3/api/list/get_all_documents_page")
@@ -278,8 +278,10 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .with_json({"start": ""})
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-            ("body.code", 0)
+            .assert_equal("body.code", 0)
+            .assert_equal("body.data.documents[0].folderId","0")
+            .assert_length_greater_or_equals("body.data.documents",6)
+            .assert_contains("body.data.documents[0].name", "kaikai")
         ),
         Step(
             RunRequest("/v3/api/list/star_relation/get")
@@ -306,8 +308,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             )
             .validate()
             .assert_equal("status_code", 200)
-            .assert_equal
-            ("body.code", 0)
+            .assert_equal("body.code", 0)
         ),
         Step(
             RunRequest("/v3/api/user/get_user_params")
@@ -492,8 +493,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
         ),
         Step(
             RunRequest("/v3/api/user/current_level")
-            .post
-                ("https://api2.${host}/v3/api/user/current_level")
+            .post("https://api2.${host}/v3/api/user/current_level")
             .with_headers(
                 **{
                     "content-length": "28",
@@ -1413,6 +1413,7 @@ class TestCaseMubuCreateDocFial(HttpRunner):
             .assert_equal("body.code", 0)
         ),
     ]
+
 
 
 if __name__ == "__main__":
